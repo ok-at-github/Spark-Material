@@ -83,7 +83,7 @@
              bottom="row1:10" baseline="row1:0"/>  
     
     <s:Group id="contentGroup" showErrorTip="false" showErrorSkin="true"
-             left="contentCol:0" right="contentCol:1" 
+             left="contentCol:10" right="contentCol:1" 
              baseline="row1:0" bottom="row1:10">
         <s:layout>
             <s:VerticalLayout/>
