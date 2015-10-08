@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		width="16" height="16">
+	
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.supportClasses.ButtonBase")]
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="down" />
+		<s:State name="over" />
+		<s:State name="up" />
+	</s:states>
+	
+	<s:Rect width="16" height="16">
+		<s:fill>
+			<s:SolidColor alpha="0"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Line x="0.5" y="0.5" xTo="15" yTo="15">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#5C5C5C" joints="miter" miterLimit="4"
+								weight="1" color.over="0" color.down="0"/>
+		</s:stroke>
+	</s:Line>
+	<s:Line x="0.5" y="0.5" xFrom="15" yTo="15">
+		<s:stroke>
+			<s:SolidColorStroke caps="none" color="#5C5C5C" joints="miter" miterLimit="4"
+								weight="1" color.over="0" color.down="0"/>
+		</s:stroke>
+	</s:Line>
+</s:Skin>

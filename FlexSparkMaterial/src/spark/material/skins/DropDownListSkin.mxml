@@ -18,17 +18,20 @@
 
     <s:states>
         <s:State name="normal" />
+		<s:State name="normalError" stateGroups="errorStates"/>
 		<s:State name="normalFocused" stateGroups="focusedStates"/>
-		<s:State name="normalFocusedError" stateGroups="focusedStates"/>
-        <s:State name="open" />
+		<s:State name="normalFocusedError" stateGroups="focusedStates,errorStates"/>
+        <s:State name="open" stateGroups="openStates"/>
         <s:State name="disabled" />
-		<s:State name="normalWithPrompt" stateGroups="promptStates"/>
-		<s:State name="normalWithPromptError" stateGroups="promptStates"/>
 		<s:State name="normalWithFloatPrompt" stateGroups="floatPromptStates"/>
 		<s:State name="normalWithFloatPromptError" stateGroups="floatPromptStates,errorStates"/>
 		<s:State name="normalFocusedWithFloatPrompt" stateGroups="floatPromptStates,focusedStates"/>
 		<s:State name="normalFocusedWithFloatPromptError" stateGroups="floatPromptStates,focusedStates,errorStates"/>
-		<s:State name="disabledWithPrompt" stateGroups="disabledStates,promptStates"/>
+		<s:State name="openError" stateGroups="openStates,errorStates"/>
+		<s:State name="openFocused" stateGroups="openStates,focusedStates"/>
+		<s:State name="openFocusedError" stateGroups="openStates,focusedStates,errorStates"/>
+		<s:State name="openWithFloatPrompt" stateGroups="openStates,floatPromptStates"/>
+		<s:State name="openFocusedWithFloatPrompt" stateGroups="openStates,floatPromptStates,focusedStates"/>
 		<s:State name="disabledWithFloatPrompt" stateGroups="disabledStates,floatPromptStates"/>
 		<s:State name="disabledWithFloatPromptError" stateGroups="disabledStates,floatPromptStates,errorStates"/>
     </s:states>
@@ -58,7 +61,7 @@
 		</s:Transition>
 	</s:transitions>
 	
-    <s:PopUpAnchor id="popUp" displayPopUp.normal="false" displayPopUp.open="true" includeIn="open"
+    <s:PopUpAnchor id="popUp" displayPopUp.normal="false" displayPopUp.openStates="true" includeIn="openStates"
         left="0" right="0" top="0" bottom="0" itemDestructionPolicy="auto"
         popUpPosition="below" popUpWidthMatchesAnchorWidth="true">
         
@@ -84,19 +87,19 @@
     </s:PopUpAnchor>
     
     <s:Button id="openButton" left="0" right="0" height="25" bottom="0" focusEnabled="false" tabEnabled="false"
-			  skinClass="spark.material.skins.DropDownListButtonSkin" />  
+			  skinClass="spark.material.skins.DropDownListButtonSkin" skinClass.floatPromptStates="spark.material.skins.DropDownListSelectedButtonSkin"/>  
     	
 	<s:Label id="promptDisplay" maxDisplayedLines="1" left="1" cacheAsBitmap="true"
-			 verticalAlign="middle" top.promptStates="20" top.floatPromptStates="1" fontStyle="normal"
-			 mouseEnabled="false" mouseChildren="false" fontSize.floatPromptStates="12" lineThrough.disabledWithPrompt="true"
-			 includeIn="promptStates,floatPromptStates" color="#999999" color.focusedStates="#5380D0" color.errorStates="#ff0000"/>
+			 verticalAlign="middle" top="20" top.floatPromptStates="1" fontStyle="normal"
+			 mouseEnabled="false" mouseChildren="false" fontSize.floatPromptStates="12" lineThrough.disabled="true"
+			 color="#999999" color.focusedStates="#5380D0" color.errorStates="#ff0000"/>
 	
-    <s:Label id="labelDisplay" verticalAlign="middle" fontStyle="normal" color="#CCCCCC" color.focusedStates="#000000" maxDisplayedLines="1" mouseEnabled="false"
-			 left="1" right="30" top="20" paddingBottom="3" bottom="2" lineThrough.disabledWithFloatPrompt="true"/>
+    <s:Label id="labelDisplay" verticalAlign="middle" fontStyle="normal" color="#CCCCCC" color.floatPromptStates="#000000" color.focusedStates="#000000" maxDisplayedLines="1" mouseEnabled="false"
+			 left="1" right="30" top="20" paddingBottom="3" bottom="2" lineThrough.disabledWithFloatPrompt="true" visible="false"/>
 	
 	<s:Line left="0" right="0" bottom="0">
 		<s:stroke>
-			<s:SolidColorStroke id="borderStroke" weight="1" caps="square" color="#999999" color.normalWithPromptError="#ff0000"/>
+			<s:SolidColorStroke id="borderStroke" weight="1" caps="square" color="#999999" color.normalError="#ff0000"/>
 		</s:stroke>
 	</s:Line>
 	
