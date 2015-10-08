@@ -101,9 +101,7 @@ package spark.material.components
 			}
 			
 			if(focusManager && focusManager.getFocus() != focusManager.findFocusManagerComponent(this) && skin.currentState.indexOf("Focused") != -1)
-			{
 				skin.currentState = skin.currentState.substr(0,skin.currentState.indexOf("Focused")).substr(skin.currentState.indexOf("Focused"), skin.currentState.length);
-			}
 		}
 		
 		override public function set selectedItem(value:*):void
@@ -152,7 +150,6 @@ package spark.material.components
 			if(showErrorSkin)
 				skinState += "Error";
 			
-			trace(skinState);
 			return skinState;
 		}
 	}

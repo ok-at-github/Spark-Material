@@ -153,10 +153,10 @@
 						</s:FormItem>
 						<s:FormItem label="DropdownList">
 							<s:layout>
-								<s:HorizontalLayout gap="20" verticalAlign="middle"/>
+								<s:HorizontalLayout gap="10" verticalAlign="bottom"/>
 							</s:layout>
 							<components:DropDownList id="dropdownlist" dataProvider="{cities}" prompt="City"/>
-							<s:Button skinClass="skins.ClearButtonSkin" click="dropdownlist.selectedItem=null" visible="{dropdownlist.selectedIndex!=-1}"/>
+							<s:Label text="clear" color="#f44336" fontSize="13" buttonMode="true" useHandCursor="true" click="dropdownlist.selectedItem=null" visible="{dropdownlist.selectedIndex!=-1}"/>
 						</s:FormItem>
 						<s:FormItem label="Button">
 							<s:layout>
