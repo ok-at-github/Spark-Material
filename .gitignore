@@ -13,3 +13,7 @@ bin-debug/
 # information for Eclipse / Flash Builder.
 *.actionScriptProperties
 FlexSparkMaterial/.flexProperties
+
+*.swf
+*.js
+*.actionScriptProperties
