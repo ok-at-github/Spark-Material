@@ -81,10 +81,11 @@
 			showErrorTip: false;
 		}
 			
-		s|VScrollBar {
-			skinClass: ClassReference("spark.material.skins.VScrollBarSkin");
+		s|Scroller {
+			skinClass: ClassReference("spark.material.skins.ScrollSkin");
 		}
 	</fx:Style>
+	
 	<fx:Script>
 		<![CDATA[
 			import flash.net.navigateToURL;

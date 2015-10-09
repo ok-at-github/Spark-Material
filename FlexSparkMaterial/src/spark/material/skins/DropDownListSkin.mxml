@@ -76,7 +76,8 @@
                 </s:fill>
             </s:Rect>
             
-            <s:Scroller id="scroller" left="0" top="0" right="0" bottom="0" hasFocusableChildren="false" minViewportInset="0" horizontalScrollPolicy="off">
+            <s:Scroller id="scroller" left="0" top="0" right="0" bottom="0" hasFocusableChildren="false" minViewportInset="0" horizontalScrollPolicy="off"
+						measuredSizeIncludesScrollBars="false">
                 <s:DataGroup id="dataGroup" itemRenderer="spark.material.skins.DefaultItemRenderer">
                     <s:layout>
                         <s:VerticalLayout gap="0" horizontalAlign="contentJustify" requestedMinRowCount="1" requestedMaxRowCount="5"/>
@@ -90,12 +91,13 @@
 			  skinClass="spark.material.skins.DropDownListButtonSkin" skinClass.floatPromptStates="spark.material.skins.DropDownListSelectedButtonSkin"/>  
     	
 	<s:Label id="promptDisplay" maxDisplayedLines="1" left="1" cacheAsBitmap="true" right="30"
-			 verticalAlign="middle" top="20" top.floatPromptStates="1" fontStyle="normal"
+			 verticalAlign="middle" top="20" top.floatPromptStates="1" fontStyle="normal" focusEnabled="false" tabEnabled="false"
 			 mouseEnabled="false" mouseChildren="false" fontSize.floatPromptStates="12" lineThrough.disabled="true"
 			 color="#999999" color.focusedStates="#5380D0" color.errorStates="#ff0000"/>
 	
     <s:Label id="labelDisplay" verticalAlign="middle" fontStyle="normal" color="#CCCCCC" color.floatPromptStates="#000000" color.focusedStates="#000000" maxDisplayedLines="1" mouseEnabled="false"
-			 left="1" right="30" top="20" paddingBottom="3" bottom="2" lineThrough.disabledWithFloatPrompt="true" visible="false" mouseChildren="false"/>
+			 left="1" right="30" top="20" paddingBottom="3" bottom="2" lineThrough.disabledWithFloatPrompt="true" visible="false" mouseChildren="false"
+			 focusEnabled="false" tabEnabled="false"/>
 	
 	<s:Line left="0" right="0" bottom="0">
 		<s:stroke>

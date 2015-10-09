@@ -187,7 +187,7 @@ package spark.material.components
 		override protected function getCurrentSkinState():String
 		{
 			var skinState:String = super.getCurrentSkinState();
-						
+									
 			if(enabled && focusManager && focusManager.getFocus() == focusManager.findFocusManagerComponent(this))
 			{
 				skinState += "Focused";
