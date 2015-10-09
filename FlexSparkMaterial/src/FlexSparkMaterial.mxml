@@ -67,6 +67,13 @@
 			inkColor: #f68f89;
 			color: #f44336;
 		}
+			
+		components|DropDownList
+		{
+			selectionColor: #ffffff;
+			rollOverColor: #eeeeee;
+			selectedItemTextColor: #106cc8;
+		}
 				
 		s|FormItem {
 			skinClass: ClassReference("spark.material.skins.FormItemSkin");
@@ -86,11 +93,24 @@
 		<s:ArrayList id="cities">
 			<s:source>
 				<fx:Array>
+					<fx:Object label="Aveiro"/>
+					<fx:Object label="Beja"/>
 					<fx:Object label="Braga"/>
-					<fx:Object label="Porto"/>
+					<fx:Object label="Bragança"/>
+					<fx:Object label="Castelo Branco"/>
 					<fx:Object label="Coimbra"/>
-					<fx:Object label="Lisboa"/>
+					<fx:Object label="Évora"/>
 					<fx:Object label="Faro"/>
+					<fx:Object label="Guarda"/>
+					<fx:Object label="Leiria"/>
+					<fx:Object label="Lisboa"/>
+					<fx:Object label="Portalegre"/>
+					<fx:Object label="Porto"/>
+					<fx:Object label="Santarém"/>
+					<fx:Object label="Setubal"/>
+					<fx:Object label="Viana do Castelo"/>
+					<fx:Object label="Vila Real"/>
+					<fx:Object label="Viseu"/>
 				</fx:Array>
 			</s:source>
 		</s:ArrayList>
@@ -118,6 +138,13 @@
 					<s:Form top="0" left="0" bottom="0" right="0">
 						<s:FormItem label="TextInput" required="true">						
 							<components:TextInput id="firstName" prompt="First Name" width="50%" change="validator.validate()" focusOut="validator.validate()"/>
+						</s:FormItem>
+						<s:FormItem label="DropdownList">
+							<s:layout>
+								<s:HorizontalLayout gap="10" verticalAlign="bottom"/>
+							</s:layout>
+							<components:DropDownList id="dropdownlist" dataProvider="{cities}" prompt="State" />
+							<s:Label text="clear" color="#f44336" fontSize="13" buttonMode="true" useHandCursor="true" click="dropdownlist.selectedItem=null" visible="{dropdownlist.selectedIndex!=-1}"/>
 						</s:FormItem>
 						<s:FormItem label="CheckBox">
 							<s:layout>
@@ -150,14 +177,7 @@
 							</s:layout>
 							<components:HSlider id="slider" minimum="0" maximum="10" width="200" stepSize="0"/>
 							<components:HSlider enabled="false" value="{slider.value}" minimum="0" maximum="10" width="200" stepSize="0"/>
-						</s:FormItem>
-						<s:FormItem label="DropdownList">
-							<s:layout>
-								<s:HorizontalLayout gap="10" verticalAlign="bottom"/>
-							</s:layout>
-							<components:DropDownList id="dropdownlist" dataProvider="{cities}" prompt="City"/>
-							<s:Label text="clear" color="#f44336" fontSize="13" buttonMode="true" useHandCursor="true" click="dropdownlist.selectedItem=null" visible="{dropdownlist.selectedIndex!=-1}"/>
-						</s:FormItem>
+						</s:FormItem>						
 						<s:FormItem label="Button">
 							<s:layout>
 								<s:HorizontalLayout gap="20"/>

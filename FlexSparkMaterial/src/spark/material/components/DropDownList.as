@@ -1,10 +1,14 @@
 package spark.material.components
 {
 	import flash.display.InteractiveObject;
+	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
+	import mx.core.UIComponent;
 	import mx.core.mx_internal;
+	import mx.events.FlexEvent;
 	import mx.graphics.SolidColorStroke;
 	
 	import spark.components.DropDownList;
@@ -14,6 +18,9 @@ package spark.material.components
 	import spark.utils.LabelUtil;
 	
 	use namespace mx_internal;
+	
+	[Style(name="inkColor", type="uint", format="Color", inherit="yes", defaultValue="#666666")]
+	[Style(name="selectedItemTextColor", type="uint", format="Color", inherit="yes", defaultValue="#106cc8")]
 	
 	[SkinState("normalError")]
 	[SkinState("normalFocused")]
@@ -37,10 +44,13 @@ package spark.material.components
 		[SkinPart(required="false")]
 		public var borderStroke:SolidColorStroke;
 		
+		[SkinPart(required="false")]
+		public var popUp:PopUpAnchor;
+		
 		public function DropDownList()
 		{
 			super();
-			
+						
 			if(!getStyle("skinClass"))
 				setStyle("skinClass", DropDownListSkin);
 			
@@ -57,7 +67,56 @@ package spark.material.components
 			{
 				promptDisplay.text = prompt;
 			}
+			else if(instance == dropDown)
+			{
+				//dropDown.addEventListener(FlexEvent.CREATION_COMPLETE, onDropDownAdded);
+			}
+			else if(instance == popUp)
+			{
+				popUp.addEventListener(FlexEvent.CREATION_COMPLETE, onDropDownAdded);
+			}
 		}
+		
+		protected function onDropDownAdded(evt:Event):void
+		{
+			popUp.width = Math.max(dropDown.width, width);
+			
+			//itemRenderer label is at x=15 y=15
+			var labelBounds:Rectangle = (labelDisplay as UIComponent).getBounds(skin);
+			
+			if(layout && selectedIndex != -1)
+			{				
+				var spDelta:Point = dataGroup.layout.getScrollPositionDeltaToElement(Math.min(dataGroup.numElements-1,selectedIndex + 3));
+				var selectedItemBounds:Rectangle = dataGroup.layout.getElementBounds(selectedIndex);
+				
+				if(spDelta && spDelta.y > 0)
+				{
+					var centerVertical:Number = Math.min(dataGroup.height - selectedItemBounds.height, spDelta.y + scroller.height * .5);
+					
+					dataGroup.horizontalScrollPosition += spDelta.x;
+					dataGroup.verticalScrollPosition += spDelta.y;
+					
+					popUp.adjustTopLeft(labelBounds.y - (selectedItemBounds.y - spDelta.y) - 15, labelBounds.x - (selectedItemBounds.x - spDelta.x) - 15);
+				}
+				else
+				{
+					popUp.adjustTopLeft(labelBounds.y - selectedItemBounds.y - 15, labelBounds.x - selectedItemBounds.x - 15);
+				}				
+			}
+			else
+			{
+				popUp.adjustTopLeft(labelBounds.y - 15, labelBounds.x - 15);
+			}			
+			
+			dropDown.visible = true;
+		}
+		
+		mx_internal override function positionIndexInView(index:int, topOffset:Number = NaN, bottomOffset:Number = NaN, leftOffset:Number = NaN, rightOffset:Number = NaN):void
+		{
+			//don't position.. we do that on onDropDownAdded
+			return;
+		}
+		
 		
 		private var showErrorSkin:Boolean;
 		
@@ -113,7 +172,9 @@ package spark.material.components
 		{
 			var focusPoint:Point = new Point(stage.mouseX, stage.mouseY);
 			var objectsUnderPoint:Array = stage.getObjectsUnderPoint(focusPoint);
-			stage.focus = InteractiveObject(objectsUnderPoint.pop().parent);
+			var lastElement:Object = objectsUnderPoint.pop();
+			if(lastElement && lastElement.hasOwnProperty("parent"))
+			stage.focus = InteractiveObject(lastElement["parent"] || lastElement);
 		}
 		
 		override protected function focusInHandler(event:FocusEvent):void
