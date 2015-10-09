@@ -73,23 +73,28 @@
 			selectionColor: #ffffff;
 			rollOverColor: #eeeeee;
 			selectedItemTextColor: #106cc8;
+			inkColor: #bababa;
 		}
 				
 		s|FormItem {
 			skinClass: ClassReference("spark.material.skins.FormItemSkin");
 			showErrorTip: false;
 		}
+			
+		s|VScrollBar {
+			skinClass: ClassReference("spark.material.skins.VScrollBarSkin");
+		}
 	</fx:Style>
 	<fx:Script>
 		<![CDATA[
 			import flash.net.navigateToURL;
-			
-			import spark.material.skins.PanelSkin;
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
-		<mx:Validator id="validator" source="{firstName}" property="text"/>
+		<mx:Validator id="textInputValidator" source="{firstName}" property="text"/>
+		<mx:NumberValidator id="dropdownListValidator" source="{dropdownlist}" property="selectedIndex" minValue="0"
+							lowerThanMinError="This field is required"/>
 		<s:ArrayList id="cities">
 			<s:source>
 				<fx:Array>
@@ -137,14 +142,15 @@
 					</s:Rect>					
 					<s:Form top="0" left="0" bottom="0" right="0">
 						<s:FormItem label="TextInput" required="true">						
-							<components:TextInput id="firstName" prompt="First Name" width="50%" change="validator.validate()" focusOut="validator.validate()"/>
+							<components:TextInput id="firstName" prompt="First Name" width="50%" change="textInputValidator.validate()" focusOut="textInputValidator.validate()"/>
 						</s:FormItem>
-						<s:FormItem label="DropdownList">
+						<s:FormItem label="DropdownList" required="true">
 							<s:layout>
 								<s:HorizontalLayout gap="10" verticalAlign="bottom"/>
 							</s:layout>
-							<components:DropDownList id="dropdownlist" dataProvider="{cities}" prompt="State" />
-							<s:Label text="clear" color="#f44336" fontSize="13" buttonMode="true" useHandCursor="true" click="dropdownlist.selectedItem=null" visible="{dropdownlist.selectedIndex!=-1}"/>
+							<components:DropDownList id="dropdownlist" dataProvider="{cities}" prompt="State" change="dropdownListValidator.validate()" focusOut="dropdownListValidator.validate()"/>
+							<s:Label text="clear" color="#f44336" fontSize="13" buttonMode="true" useHandCursor="true" click="dropdownlist.selectedIndex=-1;dropdownListValidator.validate()"
+									 visible="{dropdownlist.selectedIndex!=-1}"/>
 						</s:FormItem>
 						<s:FormItem label="CheckBox">
 							<s:layout>

@@ -19,7 +19,7 @@ package spark.material.components
 	
 	use namespace mx_internal;
 	
-	[Style(name="inkColor", type="uint", format="Color", inherit="yes", defaultValue="#666666")]
+	[Style(name="inkColor", type="uint", format="Color", inherit="yes", defaultValue="#CCCCCC")]
 	[Style(name="selectedItemTextColor", type="uint", format="Color", inherit="yes", defaultValue="#106cc8")]
 	
 	[SkinState("normalError")]
@@ -58,7 +58,7 @@ package spark.material.components
 			
 			addEventListener(DropDownEvent.CLOSE, onDropDownClose);
 		}
-		
+				
 		override protected function partAdded(partName:String, instance:Object):void
 		{
 			super.partAdded(partName, instance);
@@ -66,10 +66,6 @@ package spark.material.components
 			if(instance == promptDisplay)
 			{
 				promptDisplay.text = prompt;
-			}
-			else if(instance == dropDown)
-			{
-				//dropDown.addEventListener(FlexEvent.CREATION_COMPLETE, onDropDownAdded);
 			}
 			else if(instance == popUp)
 			{
@@ -79,14 +75,18 @@ package spark.material.components
 		
 		protected function onDropDownAdded(evt:Event):void
 		{
+			if(!popUp) return;
+			
 			popUp.width = Math.max(dropDown.width, width);
 			
 			//itemRenderer label is at x=15 y=15
 			var labelBounds:Rectangle = (labelDisplay as UIComponent).getBounds(skin);
 			
 			if(layout && selectedIndex != -1)
-			{				
-				var spDelta:Point = dataGroup.layout.getScrollPositionDeltaToElement(Math.min(dataGroup.numElements-1,selectedIndex + 3));
+			{
+				var middleItem:int = int(dataGroup.layout["requestedMaxRowCount"]/2);
+				
+				var spDelta:Point = dataGroup.layout.getScrollPositionDeltaToElement(Math.min(dataGroup.numElements-1,selectedIndex + middleItem));
 				var selectedItemBounds:Rectangle = dataGroup.layout.getElementBounds(selectedIndex);
 				
 				if(spDelta && spDelta.y > 0)
@@ -162,19 +162,14 @@ package spark.material.components
 			if(focusManager && focusManager.getFocus() != focusManager.findFocusManagerComponent(this) && skin.currentState.indexOf("Focused") != -1)
 				skin.currentState = skin.currentState.substr(0,skin.currentState.indexOf("Focused")).substr(skin.currentState.indexOf("Focused"), skin.currentState.length);
 		}
-		
-		override public function set selectedItem(value:*):void
-		{
-			super.selectedItem = value;			
-		}
-		
+				
 		protected function onDropDownClose(evt:DropDownEvent):void
 		{
 			var focusPoint:Point = new Point(stage.mouseX, stage.mouseY);
 			var objectsUnderPoint:Array = stage.getObjectsUnderPoint(focusPoint);
 			var lastElement:Object = objectsUnderPoint.pop();
 			if(lastElement && lastElement.hasOwnProperty("parent"))
-			stage.focus = InteractiveObject(lastElement["parent"] || lastElement);
+				stage.focus = InteractiveObject(lastElement["parent"] || lastElement);
 		}
 		
 		override protected function focusInHandler(event:FocusEvent):void

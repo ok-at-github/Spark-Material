@@ -63,7 +63,7 @@
 	</s:transitions>
 	
     <components:PopUpAnchor id="popUp" displayPopUp.normal="false" displayPopUp.openStates="true" includeIn="openStates"
-        itemDestructionPolicy="auto" popUpPosition="below" popUpWidthMatchesAnchorWidth="false">
+        itemDestructionPolicy="auto" popUpPosition="below" popUpWidthMatchesAnchorWidth="false" includeInLayout="false">
         
         <s:Group id="dropDown" visible="false" showEffect="Fade" hideEffect="Fade">
         
@@ -79,7 +79,7 @@
             <s:Scroller id="scroller" left="0" top="0" right="0" bottom="0" hasFocusableChildren="false" minViewportInset="0" horizontalScrollPolicy="off">
                 <s:DataGroup id="dataGroup" itemRenderer="spark.material.skins.DefaultItemRenderer">
                     <s:layout>
-                        <s:VerticalLayout gap="0" horizontalAlign="contentJustify" requestedMinRowCount="1" requestedMaxRowCount="7"/>
+                        <s:VerticalLayout gap="0" horizontalAlign="contentJustify" requestedMinRowCount="1" requestedMaxRowCount="5"/>
                     </s:layout>
                 </s:DataGroup> 
             </s:Scroller>
@@ -99,7 +99,7 @@
 	
 	<s:Line left="0" right="0" bottom="0">
 		<s:stroke>
-			<s:SolidColorStroke id="borderStroke" weight="1" caps="square" color="#999999" color.normalError="#ff0000"/>
+			<s:SolidColorStroke id="borderStroke" weight="1" caps="square" color="#999999" color.normalWithFloatPromptError="#ff0000" color.normalFocusedWithFloatPromptError="#ff0000"/>
 		</s:stroke>
 	</s:Line>
 	
