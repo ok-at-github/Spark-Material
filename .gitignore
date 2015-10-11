@@ -5,7 +5,7 @@ bin-release/
 
 # Other files and folders
 .settings/
-.idea/*
+.idea/
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 .project
@@ -19,4 +19,5 @@ FlexSparkMaterial/.flexProperties
 *.swf
 *.js
 *.actionScriptProperties
+*.iml
 FlexSparkMaterial/.actionScriptProperties
