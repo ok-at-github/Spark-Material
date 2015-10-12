@@ -3,9 +3,11 @@ package spark.material.components
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
+	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	
+	import flash.ui.Keyboard;
+
 	import mx.core.UIComponent;
 	import mx.core.mx_internal;
 	import mx.events.FlexEvent;
@@ -57,6 +59,7 @@ package spark.material.components
 			setStyle("focusSkin", null);
 			
 			addEventListener(DropDownEvent.CLOSE, onDropDownClose);
+			addEventListener(DropDownEvent.OPEN, onDropDownOpen);
 		}
 				
 		override protected function partAdded(partName:String, instance:Object):void
@@ -72,7 +75,17 @@ package spark.material.components
 				popUp.addEventListener(FlexEvent.CREATION_COMPLETE, onDropDownAdded);
 			}
 		}
-		
+
+		override protected function keyDownHandler(event:KeyboardEvent):void
+		{
+			super.keyDownHandler(event);
+
+			if(event.keyCode == Keyboard.SPACE && !isDropDownOpen)
+			{
+				openDropDown();
+			}
+		}
+
 		protected function onDropDownAdded(evt:Event):void
 		{
 			if(!popUp) return;
@@ -91,8 +104,6 @@ package spark.material.components
 				
 				if(spDelta && spDelta.y > 0)
 				{
-					var centerVertical:Number = Math.min(dataGroup.height - selectedItemBounds.height, spDelta.y + scroller.height * .5);
-					
 					dataGroup.horizontalScrollPosition += spDelta.x;
 					dataGroup.verticalScrollPosition += spDelta.y;
 					
@@ -114,10 +125,9 @@ package spark.material.components
 		mx_internal override function positionIndexInView(index:int, topOffset:Number = NaN, bottomOffset:Number = NaN, leftOffset:Number = NaN, rightOffset:Number = NaN):void
 		{
 			//don't position.. we do that on onDropDownAdded
-			return;
 		}
-		
-		
+
+
 		private var showErrorSkin:Boolean;
 		
 		mx_internal override function updateErrorSkin():void
@@ -162,7 +172,13 @@ package spark.material.components
 			if(focusManager && focusManager.getFocus() != focusManager.findFocusManagerComponent(this) && skin.currentState.indexOf("Focused") != -1)
 				skin.currentState = skin.currentState.substr(0,skin.currentState.indexOf("Focused")).substr(skin.currentState.indexOf("Focused"), skin.currentState.length);
 		}
-				
+
+		protected function onDropDownOpen(evt:DropDownEvent):void
+		{
+			if(skin.currentState.indexOf("open") == -1)
+				invalidateSkinState();
+		}
+
 		protected function onDropDownClose(evt:DropDownEvent):void
 		{
 			var focusPoint:Point = new Point(stage.mouseX, stage.mouseY);
@@ -171,7 +187,7 @@ package spark.material.components
 			if(lastElement && lastElement.hasOwnProperty("parent"))
 				stage.focus = InteractiveObject(lastElement["parent"] || lastElement);
 		}
-		
+
 		override protected function focusInHandler(event:FocusEvent):void
 		{
 			super.focusInHandler(event);
@@ -186,7 +202,7 @@ package spark.material.components
 		
 		override protected function getCurrentSkinState():String
 		{
-			var skinState:String = super.getCurrentSkinState();
+			var skinState:String = !enabled ? "disabled" : isDropDownOpen ? "open" : "normal";
 									
 			if(enabled && focusManager && focusManager.getFocus() == focusManager.findFocusManagerComponent(this))
 			{
@@ -205,7 +221,7 @@ package spark.material.components
 			
 			if(showErrorSkin)
 				skinState += "Error";
-			
+
 			return skinState;
 		}
 	}

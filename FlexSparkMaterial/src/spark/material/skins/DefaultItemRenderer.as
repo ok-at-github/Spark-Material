@@ -5,14 +5,11 @@ package spark.material.skins
 	import flash.events.MouseEvent;
 	
 	import spark.components.Group;
-	import spark.components.supportClasses.InteractionStateDetector;
 	import spark.material.components.InkRipple;
 	import spark.skins.spark.DefaultItemRenderer;
 
 	public class DefaultItemRenderer extends spark.skins.spark.DefaultItemRenderer
 	{
-		private var interactionStateDetector:InteractionStateDetector;
-		
 		public var inkHolder:Group;
 		
 		public function DefaultItemRenderer()
